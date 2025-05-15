@@ -1,14 +1,14 @@
-import { Box, Center, Flex, Link, Text } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Center, Flex, Link, Text } from "@chakra-ui/react";
+import React from "react";
 
-import type { TimeChartItem } from './types';
-import type { Resolution } from '@blockscout/stats-types';
+import type { TimeChartItem } from "./types";
+import type { Resolution } from "@blockscout/stats-types";
 
-import { apos } from 'lib/html-entities';
-import Skeleton from 'ui/shared/chakra/Skeleton';
+import { apos } from "lib/html-entities";
+import Skeleton from "ui/shared/chakra/Skeleton";
 
-import ChartWatermarkIcon from './ChartWatermarkIcon';
-import ChartWidgetGraph from './ChartWidgetGraph';
+import ChartWatermarkIcon from "./ChartWatermarkIcon";
+import ChartWidgetGraph from "./ChartWidgetGraph";
 
 export type Props = {
   items?: Array<TimeChartItem>;
@@ -17,8 +17,8 @@ export type Props = {
   isLoading?: boolean;
   isError?: boolean;
   emptyText?: string;
-  zoomRange?: [ Date, Date ];
-  handleZoom: (range: [ Date, Date ]) => void;
+  zoomRange?: [Date, Date];
+  handleZoom: (range: [Date, Date]) => void;
   isEnlarged?: boolean;
   noAnimation?: boolean;
   resolution?: Resolution;
@@ -41,49 +41,44 @@ const ChartWidgetContent = ({
 
   if (isError) {
     return (
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        flexGrow={ 1 }
-        py={ 4 }
-      >
-        <Text
-          variant="secondary"
-          fontSize="sm"
-          textAlign="center"
-        >
-          { `The data didn${ apos }t load. Please, ` }
-          <Link href={ window.document.location.href }>try to reload the page.</Link>
+      <Flex alignItems="center" justifyContent="center" flexGrow={1} py={4}>
+        <Text variant="secondary" fontSize="sm" textAlign="center">
+          {`The data didn${apos}t load. Please, `}
+          <Link href={window.document.location.href}>
+            try to reload the page.
+          </Link>
         </Text>
       </Flex>
     );
   }
 
   if (isLoading) {
-    return <Skeleton flexGrow={ 1 } w="100%"/>;
+    return <Skeleton flexGrow={1} w="100%" />;
   }
 
   if (!hasItems) {
     return (
-      <Center flexGrow={ 1 }>
-        <Text variant="secondary" fontSize="sm">{ emptyText || 'No data' }</Text>
+      <Center flexGrow={1}>
+        <Text variant="secondary" fontSize="sm">
+          {emptyText || "No data"}
+        </Text>
       </Center>
     );
   }
 
   return (
-    <Box flexGrow={ 1 } maxW="100%" position="relative" h="100%">
+    <Box flexGrow={1} maxW="100%" position="relative" h="100%">
       <ChartWidgetGraph
-        items={ items }
-        zoomRange={ zoomRange }
-        onZoom={ handleZoom }
-        title={ title }
-        units={ units }
-        isEnlarged={ isEnlarged }
-        noAnimation={ noAnimation }
-        resolution={ resolution }
+        items={items}
+        zoomRange={zoomRange}
+        onZoom={handleZoom}
+        title={title}
+        units={units}
+        isEnlarged={isEnlarged}
+        noAnimation={noAnimation}
+        resolution={resolution}
       />
-      <ChartWatermarkIcon w="162px" h="15%"/>
+      {/* <ChartWatermarkIcon w="162px" h="15%"/> */}
     </Box>
   );
 };
