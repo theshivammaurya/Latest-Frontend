@@ -1,12 +1,15 @@
-import type { Feature } from './types';
+import type { Feature } from "./types";
 
-import services from '../services';
-import { getEnvValue } from '../utils';
+import services from "../services";
+import { getEnvValue } from "../utils";
 
-const title = 'My account';
+const title = "My account";
 
 const config: Feature<{ isEnabled: true; recaptchaSiteKey: string }> = (() => {
-  if (getEnvValue('NEXT_PUBLIC_IS_ACCOUNT_SUPPORTED') === 'true' && services.reCaptchaV2.siteKey) {
+  if (
+    getEnvValue("NEXT_PUBLIC_IS_ACCOUNT_SUPPORTED") === "true" &&
+    services.reCaptchaV2.siteKey
+  ) {
     return Object.freeze({
       title,
       isEnabled: true,
