@@ -306,6 +306,13 @@ export default function useNavItems(): ReturnType {
             isActive: pathname.startsWith("/app"),
           }
         : null,
+      {
+        text: "Validator",
+        nextRoute: { pathname: "/tan-validator" as const },
+        icon: "apps",
+        isActive: pathname.startsWith("/app"),
+      },
+
       config.features.stats.isEnabled
         ? {
             text: "Charts & stats",
