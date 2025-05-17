@@ -4,21 +4,21 @@ import {
   IconButton,
   Tooltip,
   useColorModeValue,
-} from '@chakra-ui/react';
-import React, { useRef } from 'react';
+} from "@chakra-ui/react";
+import React, { useRef } from "react";
 
-import type { TimeChartItem } from './types';
+import type { TimeChartItem } from "./types";
 
-import { route, type Route } from 'nextjs-routes';
+import { route, type Route } from "nextjs-routes";
 
-import config from 'configs/app';
-import Skeleton from 'ui/shared/chakra/Skeleton';
-import IconSvg from 'ui/shared/IconSvg';
-import NextLink from 'ui/shared/NextLink';
+import config from "configs/app";
+import Skeleton from "ui/shared/chakra/Skeleton";
+import IconSvg from "ui/shared/IconSvg";
+import NextLink from "ui/shared/NextLink";
 
-import ChartMenu from './ChartMenu';
-import ChartWidgetContent from './ChartWidgetContent';
-import useZoom from './useZoom';
+import ChartMenu from "./ChartMenu";
+import ChartWidgetContent from "./ChartWidgetContent";
+import useZoom from "./useZoom";
 
 export type Props = {
   items?: Array<TimeChartItem>;
@@ -48,105 +48,105 @@ const ChartWidget = ({
   const ref = useRef<HTMLDivElement>(null);
   const { zoomRange, handleZoom, handleZoomReset } = useZoom();
 
-  const borderColor = useColorModeValue('gray.200', 'gray.600');
+  const borderColor = useColorModeValue("gray.200", "gray.600");
 
   const hasItems = items && items.length > 2;
 
   const content = (
     <ChartWidgetContent
-      items={ items }
-      isError={ isError }
-      isLoading={ isLoading }
-      units={ units }
-      title={ title }
-      emptyText={ emptyText }
-      handleZoom={ handleZoom }
-      zoomRange={ zoomRange }
-      noAnimation={ noAnimation }
+      items={items}
+      isError={isError}
+      isLoading={isLoading}
+      units={units}
+      title={title}
+      emptyText={emptyText}
+      handleZoom={handleZoom}
+      zoomRange={zoomRange}
+      noAnimation={noAnimation}
     />
   );
 
   const chartHeader = (
     <Flex
-      flexGrow={ 1 }
+      flexGrow={1}
       flexDir="column"
       alignItems="flex-start"
-      cursor={ href ? 'pointer' : 'default' }
-      _hover={ href ? { color: 'link_hovered' } : {} }
+      cursor={href ? "pointer" : "default"}
+      _hover={href ? { color: "link_hovered" } : {}}
     >
       <Skeleton
-        isLoaded={ !isLoading }
-        fontWeight={ 600 }
-        size={{ base: 'xs', lg: 'sm' }}
+        isLoaded={!isLoading}
+        fontWeight={600}
+        size={{ base: "xs", lg: "sm" }}
       >
-
-        <span>{ title }</span>
+        <span>{title}</span>
       </Skeleton>
 
-      { description && (
+      {description && (
         <Skeleton
-          isLoaded={ !isLoading }
+          isLoaded={!isLoading}
           color="text_secondary"
           fontSize="xs"
-          mt={ 1 }
-
+          mt={1}
         >
-          <span>{ description }</span>
+          <span>{description}</span>
         </Skeleton>
-      ) }
+      )}
     </Flex>
   );
 
   return (
     <Flex
       height="100%"
-      ref={ ref }
+      ref={ref}
       flexDir="column"
       padding={{ base: 3, lg: 4 }}
       borderRadius="lg"
       border="1px"
-      borderColor={ borderColor }
-      className={ className }
+      borderColor={borderColor}
+      className={className}
     >
-      <Flex columnGap={ 6 } mb={ 2 } alignItems="flex-start">
-        { href ? (
-          <NextLink href={ href } passHref legacyBehavior >
-            { chartHeader }
+      <Flex columnGap={6} mb={2} alignItems="flex-start">
+        {href ? (
+          <NextLink href={href} passHref legacyBehavior>
+            {chartHeader}
           </NextLink>
-        ) : chartHeader }
-        <Flex ml="auto" columnGap={ 2 }>
+        ) : (
+          chartHeader
+        )}
+        <Flex ml="auto" columnGap={2}>
           <Tooltip label="Reset zoom">
             <IconButton
-              hidden={ !zoomRange }
+              hidden={!zoomRange}
               aria-label="Reset zoom"
               colorScheme="blue"
-              w={ 9 }
-              h={ 8 }
+              w={9}
+              h={8}
               size="sm"
               variant="outline"
-              onClick={ handleZoomReset }
-              icon={ <IconSvg name="repeat" w={ 4 } h={ 4 }/> }
+              onClick={handleZoomReset}
+              icon={<IconSvg name="repeat" w={4} h={4} />}
             />
           </Tooltip>
 
-          { hasItems && (
+          {hasItems && (
             <ChartMenu
-              items={ items }
-              title={ title }
-              description={ description }
-              chartUrl={ href ? config.app.baseUrl + route(href) : undefined }
-              isLoading={ isLoading }
-              chartRef={ ref }
-              units={ units }
-              handleZoom={ handleZoom }
-              handleZoomReset={ handleZoomReset }
-              zoomRange={ zoomRange }
+              items={items}
+              title={title}
+              description={description}
+              chartUrl={href ? config.app.baseUrl + route(href) : undefined}
+              isLoading={isLoading}
+              chartRef={ref}
+              units={units}
+              handleZoom={handleZoom}
+              handleZoomReset={handleZoomReset}
+              zoomRange={zoomRange}
             />
-          ) }
+          )}
         </Flex>
       </Flex>
 
-      { content }
+      {content}
     </Flex>
   );
 };
